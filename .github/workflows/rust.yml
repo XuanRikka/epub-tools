@@ -93,9 +93,9 @@ jobs:
         target="${{ matrix.target }}"
         if [[ "$target" != *"windows"* ]] && \
            ( [[ "$target" == *"i686"* ]] || [[ "$target" == *"musl"* ]] ); then
-          cross build --verbose --release --target "$target"
+          cross build --verbose --release --target "$target" --workspace
         else
-          cargo build --verbose --release --target "$target"
+          cargo build --verbose --release --target "$target" --workspace
         fi
 
     - name: Package binary (Unix)
