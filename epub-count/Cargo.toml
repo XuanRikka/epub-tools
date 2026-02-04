@@ -1,0 +1,9 @@
+[package]
+name = "epub-count"
+version = "0.2.2"
+edition = "2024"
+
+[dependencies]
+clap = { workspace = true }
+scraper = { workspace = true }
+utils = { workspace = true }

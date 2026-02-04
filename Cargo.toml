@@ -1,0 +1,24 @@
+[profile.release]
+opt-level = 3
+overflow-checks = false
+debug-assertions = false
+lto = "fat"
+codegen-units = 1
+debug = false
+strip = true
+
+[workspace.dependencies]
+clap = { version = "4.5.53", features = ["derive"] }
+memmap2 = "0.9.9"
+scraper = "0.24.0"
+walkdir = "2.5.0"
+zip = { version = "6.0.0", features = ["deflate-flate2-zlib-rs"] }
+utils = {path = "utils"}
+
+[workspace]
+members = [
+    "epub-count",
+    "utils",
+    "epub-font-subset",
+]
+resolver = "3"

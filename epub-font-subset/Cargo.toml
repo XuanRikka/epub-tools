@@ -1,0 +1,13 @@
+[package]
+name = "epub-font-subset"
+version = "0.0.1"
+edition = "2024"
+
+[dependencies]
+allsorts = { version = "0.16.1", default-features = false, features = ["flate2_rust"]}
+clap = { workspace = true }
+scraper = { workspace = true }
+utils = { workspace = true }
+flate2 = { version = "1.1.9", default-features = false, features = ["zlib-rs"]}
+fxhash = "0.2.1"
+zip = { workspace = true }
