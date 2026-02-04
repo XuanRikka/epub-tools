@@ -53,24 +53,21 @@ jobs:
       id: meta
       shell: bash
       run: |
-        PKG_NAME=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].name // empty')
-        if [[ -z "$PKG_NAME" ]]; then
-          echo "Error: package name not found" >&2
+        BIN_JSON=$(cargo metadata --no-deps --format-version 1 | \
+          jq -c '[.packages[] | .targets[] | select(.kind | index("bin")) | .name]')
+        
+        if [[ "$BIN_JSON" == "[]" ]]; then
+          echo "Error: no binaries found" >&2
           exit 1
         fi
+        
+        # 使用仓库名作为 package_name
+        PKG_NAME="${GITHUB_REPOSITORY#*/}"
         echo "package_name=$PKG_NAME" >> "$GITHUB_OUTPUT"
-    
-        # 2. 使用 `cargo read-manifest`：它只反映 Cargo.toml 中显式声明的 targets！
-        #    输出格式同 metadata 的 package.targets
-        bin_names_json=$(cargo read-manifest | \
-          jq -c '[.targets[] | select(.kind | index("bin")) | .name]')
-    
-        # 输出到 GitHub Output（确保是合法 JSON 字符串）
-        echo "bin_names=$bin_names_json" >> "$GITHUB_OUTPUT"
-    
-        # 可选：调试输出
+        echo "bin_names=$BIN_JSON" >> "$GITHUB_OUTPUT"
+        
         echo "📦 Package: $PKG_NAME"
-        echo "🛠️  Binaries: $bin_names_json"
+        echo "🛠️  Binaries: $BIN_JSON"
 
     - name: Install target
       if: ${{ !contains(matrix.target, 'musl') }}
