@@ -12,7 +12,7 @@ clap = { version = "4.5.53", features = ["derive"] }
 memmap2 = "0.9.9"
 scraper = "0.24.0"
 walkdir = "2.5.0"
-zip = { version = "6.0.0", features = ["deflate-flate2-zlib-rs"] }
+zip = { version = "6.0.0", default-features = false, features = ["time", "deflate-flate2-zlib-rs"] }
 utils = {path = "utils"}
 
 [workspace]
